@@ -2,11 +2,11 @@ import Point from './Point';
 import { CommandInvoker, } from '../application/CommandInvoker';
 
 export class MarsRover {
-  private _location: Point;
-  private _direction: String;
+  public _location: Point;
+  private _direction: string;
 
   protected _commands: string[] = [];
-  private _grid: Point;
+  public _grid: Point;
   private _status: string;
   private _obstacles: Array<Point>;
   private commandInvocker: CommandInvoker;
@@ -165,11 +165,11 @@ export class MarsRover {
     return this._location.get();
   }
 
-  get direction(): String {
+  get direction(): string {
     return this._direction;
   }
 
-  set direction(value: String) {
+  set direction(value: string) {
     this._direction = value;
   }
 
