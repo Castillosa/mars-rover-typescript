@@ -6,6 +6,10 @@ export default class Point {
       this.y = y;
     }
 
+    static fromArray(positionArray:Array<number>):Point {
+      return new Point(positionArray[0], positionArray[1]);
+    }
+
     get() {
       return [ this._x, this.y, ];
     }

@@ -1,4 +1,5 @@
 import Point from './Point';
+import { CommandInvoker, } from '../application/CommandInvoker';
 
 export class MarsRover {
   private _location: Point;
@@ -8,6 +9,7 @@ export class MarsRover {
   private _grid: Point;
   private _status: string;
   private _obstacles: Array<Point>;
+  private commandInvocker: CommandInvoker;
 
   constructor(location: number[] = [ 0, 0, ], direction: string = 'N', grid: number[] = [ 100, 100, ],
     obstacles: Array<Array<number>> = []) {
@@ -15,6 +17,7 @@ export class MarsRover {
     this.obstacles = obstacles;
     this._grid = new Point(grid[0], grid[1]);
     this._location = new Point(location[0], location[1]);
+    this.commandInvocker = new CommandInvoker();
   }
 
   commands(commands: Array<string> = []): string[] {
@@ -24,24 +27,9 @@ export class MarsRover {
     this._commands.push(...commands || []);
 
     for (const command of commands) {
-      if (!this.executeCommand(command)) {
+      if (!this.commandInvocker.run(command, this)) {
         break;
       }
-    }
-  }
-
-  executeCommand(command) {
-    switch (command) {
-      case 'f':
-        return this.move(this.direction, command);
-      case 'b':
-        return this.move(this.direction, command);
-      case 'r':
-        this.turnRight();
-        break;
-      case 'l':
-        this.turnLeft();
-        break;
     }
   }
 
