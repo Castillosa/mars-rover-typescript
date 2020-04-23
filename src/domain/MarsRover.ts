@@ -33,36 +33,6 @@ export class MarsRover {
     }
   }
 
-  move(direction, command) {
-    const initialPoint = this._location;
-    let candidate:Point = initialPoint;
-    switch (direction) {
-      case 'N':
-        candidate = this.moveNorth(command);
-        break;
-      case 'E':
-        candidate = this.moveEast(command);
-        break;
-      case 'S':
-        candidate = this.moveSouth(command);
-        break;
-      case 'W':
-        candidate = this.moveWest(command);
-        break;
-    }
-    candidate.x = this.wrappingCorretion(candidate.x, this._grid.x);
-    candidate.y = this.wrappingCorretion(candidate.y, this._grid.y);
-    if (this.checkIfObstacles(candidate)) {
-      this._location = initialPoint;
-      this.status = 'obstacle';
-      return false;
-    }
-    this._location = candidate;
-    this.status = 'OK';
-    return true;
-
-  }
-
   wrappingCorretion(axisPosition: number, max) {
     if (axisPosition >= max) {
       return axisPosition - max;
@@ -72,42 +42,6 @@ export class MarsRover {
       return axisPosition + max;
     }
     return axisPosition;
-  }
-
-  moveNorth(command) {
-    switch (command) {
-      case 'f':
-        return new Point(this._location.x, this._location.y - 1);
-      case 'b':
-        return new Point(this._location.x, this._location.y + 1);
-    }
-  }
-
-  moveSouth(command) {
-    switch (command) {
-      case 'f':
-        return new Point(this._location.x, this._location.y + 1);
-      case 'b':
-        return new Point(this._location.x, this._location.y - 1);
-    }
-  }
-
-  moveEast(command) {
-    switch (command) {
-      case 'f':
-        return new Point(this._location.x + 1, this._location.y);
-      case 'b':
-        return new Point(this._location.x - 1, this._location.y);
-    }
-  }
-
-  moveWest(command) {
-    switch (command) {
-      case 'f':
-        return new Point(this._location.x - 1, this._location.y);
-      case 'b':
-        return new Point(this._location.x + 1, this._location.y);
-    }
   }
 
   turnRight() {
